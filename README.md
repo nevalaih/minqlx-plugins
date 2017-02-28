@@ -1,7 +1,7 @@
 # minqlx-plugins
 This is a collection of plugin for [minqlx](https://github.com/MinoMino/minqlx).
 
-This repository only contains plugins created by me. Useful plugins, created by other can be found [here](https://github.com/MinoMino/minqlx/wiki/Useful-Plugins)
+This repository only contains plugins created by me. Useful plugins, created by others can be found [here](https://github.com/MinoMino/minqlx/wiki/Useful-Plugins)
 
 ## Plugins
 List of plugins and their cvars. Set the cvars by passing them as a command line argument (preferred method) or add them to `server.cfg`.
