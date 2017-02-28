@@ -25,7 +25,7 @@ except ImportError:
 
 class rebootnotifier(minqlx.Plugin):
     def __init__(self):
-        self.set_cvar_once("qlx_rebootTime", "05:00") # set 5mins earlier than cron job
+        self.set_cvar_once("qlx_rebootTime", "04:55") # set 5mins earlier than cron job
         self.initialize()
                
     def initialize(self):
