@@ -9,4 +9,4 @@ List of plugins and their cvars. Set the cvars by passing them as a command line
 - **rebootnotifier**: Displays a center print message, that the server will reboot in 5 minutes. Currently this uses a cron job to do the actual reboot.  
     - `qlx_rebootTime`: A string in 24-hours format (23:00, 05:00 etc) to set time when reboot message is displayed. Set to 5min before cron job.
         - Default: `04:55` (utc)
-        - Cron job: `0 5 * * * /sbin/shutdown -r +5` (add cron job with `sudo crontab -e` or `crontab -e`)
+        - Cron job: `0 5 * * * /sbin/shutdown -r` (add cron job with `sudo crontab -e` or `crontab -e`)
