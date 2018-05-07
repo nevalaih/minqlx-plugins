@@ -9,9 +9,8 @@
 """
     You'll need to install the schedule library. 
     Enter the following command at your terminal to install: sudo python3.5 -m pip install schedule
-    Times are specified in 24-hour time syntax, 13:00 for 1:00pm, 23:00 for 11:00pm, 02:00 for 2:00am etc.
+    Times are specified in 24-hour format, 13:00 for 1:00pm, 23:00 for 11:00pm, 02:00 for 2:00am etc.
     Check server time with "date" and adjust accordingly.
-
 """
 
 import minqlx, time
