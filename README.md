@@ -10,3 +10,7 @@ List of plugins and their cvars. Set the cvars by passing them as a command line
     - `qlx_rebootTime`: A string in 24-hours format (23:00, 05:00 etc) to set time when reboot message is displayed. Set to 5min before cron job.
         - Default: `04:55` (utc)
         - Cron job: `0 5 * * * /sbin/shutdown -r` (add cron job with `sudo crontab -e` or `crontab -e`)
+
+ - **loc**: Display the location (country) of a player based on their IP.  
+    - `qlx_locationApiKey`: A API Access Key from ipstack.com. Register for a free key at [ipstack.com](https://ipstack.com).
+        - Default: `NONE`
