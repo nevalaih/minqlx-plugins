@@ -40,32 +40,37 @@ class loc(minqlx.Plugin):
         self.add_command("tomtec_versions", self.cmd_showversion)
         self.add_command("naa_versions", self.cmd_naaversion)
 
-        self.plugin_version = "1.1"
-        self.plugin_naaversion = "0.3"
-        self.location_api_key = self.get_cvar("qlx_locationApiKey")
+        self.plugin_version = "1.2"
+        self.plugin_naaversion = "0.4"
+
 
     @minqlx.thread
     def cmd_location(self, player, msg, channel):
         if len(msg) < 2:
             return minqlx.RET_USAGE
 
+        if (self.get_cvar("qlx_locationApiKey") == "NONE"):
+            channel.reply("^1Error: ^2qlx_locationApiKey^7 is not set correctly.")
+            channel.reply("Please read the comments in the plugin for instructions to resolve this.")
+            return
+
         try:
             player_ip = self.player(int(msg[1])).ip
             player_name = self.player(int(msg[1])).name
-        except:
+        except (minqlx.NonexistentPlayerError, ValueError):
             channel.reply("^1Invalid Client ID.^7 Enter a valid client ID to see their approximate location.")
             return
 
-        ipData = requests.get('http://api.ipstack.com/{}?access_key={}&output=json&legacy=1'.format(player_ip, self.location_api_key), stream=True)
-        ipData = str(ipData.text)
-        ipDataParsed = json.loads(ipData)
-
-        channel.reply("{}^7's location: {}".format(player_name, ipDataParsed['country_name']))
-
-        return minqlx.RET_STOP_ALL
+        response = requests.get("http://api.ipstack.com/{}?access_key={}&output=json&legacy=1".format(player_ip, self.get_cvar("qlx_locationApiKey")), stream=True)
+        if response.status_code != requests.codes.ok:
+            channel.reply("^1HTTP Error {} while trying to obtain location info.".format(response.status_code))
+            return
+        
+        ipData = json.loads(str(response.text))
+        channel.reply("{}^7's location: {}".format(player_name, ipData['country_name']))
 
     def cmd_showversion(self, player, msg, channel):
         channel.reply("^4locations.py^7 - version {}, created by Thomas Jones on 22/01/2016.".format(self.plugin_version))
 
     def cmd_naaversion(self, player, msg, channel):
-        channel.reply("loc.py - version {}, by naa on 17/07/2018 modified from locations.py (Thomas Jone)".format(self.plugin_naaversion))
+        channel.reply("loc.py - version {}, by naa on 17/07/2018 modified from locations.py (Thomas Jones)".format(self.plugin_naaversion))
