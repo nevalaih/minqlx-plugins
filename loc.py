@@ -20,10 +20,16 @@
 # End of original comments *
 #***************************
 
+
 """
-The following cvars are used on this plugin:
-    qlx_locationCommandPermissionRequired: Required permission level to run the !loc and !location commands. Default: 1
-    qlx_locationApiKey: Required to use the api at ipstack.com. Register for a free account on https://ipstack.com to get your own api key. Default: none
+    Uses:
+
+    * qlx_locationCommandPermissionRequired (Default: 1) Required permission level to run the !loc and !location commands.
+
+    * qlx_locationApiKey (default: NONE) Required to use the api at ipstack.com. Register for a free account on https://ipstack.com to get your own api key.
+
+    * qlx_locationChangePlayerFlag (default: 0)  int flag to indicate where to change the players flag.
+
 """
 
 import minqlx
@@ -35,6 +41,7 @@ class loc(minqlx.Plugin):
     def __init__(self):
         self.set_cvar_once("qlx_locationCommandPermissionRequired", "1")
         self.set_cvar_once("qlx_locationApiKey", "NONE")
+        self.set_cvar_once("qlx_locationChangePlayerFlag", "0")
 
         self.add_command(("loc", "location"), self.cmd_location, (self.get_cvar("qlx_locationCommandPermissionRequired", int)), usage="<id>")
         self.add_command("tomtec_versions", self.cmd_showversion)
@@ -42,7 +49,6 @@ class loc(minqlx.Plugin):
 
         self.plugin_version = "1.2"
         self.plugin_naaversion = "0.4"
-
 
     @minqlx.thread
     def cmd_location(self, player, msg, channel):
@@ -68,6 +74,8 @@ class loc(minqlx.Plugin):
         
         ipData = json.loads(str(response.text))
         channel.reply("{}^7's location: {}".format(player_name, ipData['country_name']))
+        if self.location_change_player_flag == "1":
+            self.player(int(msg[1])).country = ipDataParsed['country_code']
 
     def cmd_showversion(self, player, msg, channel):
         channel.reply("^4locations.py^7 - version {}, created by Thomas Jones on 22/01/2016.".format(self.plugin_version))
